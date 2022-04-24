@@ -1,6 +1,10 @@
 import { createContext, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const addCartItem = (cartItems, productToAdd) => {
+  // notify user that item has been added to cart
+  toast.success(`${productToAdd.name} added to cart`);
+
   // find if cartItems contains productToAdd
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id

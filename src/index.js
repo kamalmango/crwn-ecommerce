@@ -6,12 +6,14 @@ import App from "./App";
 import { UserProvider } from "./contexts/user.context";
 import { CategoriesProvider } from "./contexts/categories.context";
 import { CartProvider } from "./contexts/cart.context";
+import { Toaster } from "react-hot-toast";
 
 import "./index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <Toaster />
     <BrowserRouter>
       <UserProvider>
         <CategoriesProvider>
