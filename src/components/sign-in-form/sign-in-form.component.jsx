@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import {
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
+import { toast } from "react-hot-toast";
 import "./sign-in-form.styles.scss";
 
 const defaultFormFields = {
@@ -15,6 +17,7 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -22,6 +25,7 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     await signInWithGooglePopup();
+    navigate("/shop");
   };
 
   const handleSubmit = async (event) => {
@@ -33,13 +37,14 @@ const SignInForm = () => {
         password
       );
       resetFormFields();
+      navigate("/shop");
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
-          alert("incorrect password for email");
+          toast.error("Incorrect password for email");
           break;
         case "auth/user-not-found":
-          alert("no user associated with this email");
+          toast.error("No user associated with this email");
           break;
         default:
           console.log(error);
